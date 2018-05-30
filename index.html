@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<title>Тестовое задание</title>
+	</head>
+	
+	<body>
+		<main>
+			<div class="container">
+				<div>
+					<h2>Задание 1</h2>
+					<p>Число: <span id="quest_1_n"></span></p>
+					<p>Степень: <span id="quest_1_e"></span></p>
+					<p>Результат: <span id="quest_1_result"></span></p>
+				</div>
+				
+				<div>
+					<h2>Задание 2</h2>
+					<form id="form">
+				      <label for="cypher">Текст:</label>
+				      <input type="text" id="cypher"/>
+				      
+				      <label for="offset">Сдвиг:</label>
+				      <input type="number" value="3" id="offset"/>
+	
+				      <label for="finish">Результат:</label>
+				      <input type="text" id="finish"/>
+	
+				    </form>
+				</div>
+				
+				<div>
+					<h2>Задание 3</h2>
+					<p id="quest_3"></p>
+				</div>
+			</div>
+			<script>
+				function randomInteger(min, max) {
+				    var rand = min - 0.5 + Math.random() * (max - min + 1)
+				    rand = Math.round(rand);
+				    return rand;
+				  }
+				  
+				// Задание 1
+
+				var num = document.getElementById('quest_1_n'),
+					st = document.getElementById('quest_1_e'),
+					fin = document.getElementById('quest_1_result');
+					
+					num_value = randomInteger(0, 100),
+					st_value = randomInteger(0, 100);
+					
+					num.innerHTML = num_value;
+					st.innerHTML = st_value;
+					
+					fin.innerHTML = Math.pow(num_value,st_value);
+					
+				// Задание 2
+				var alphabet = "abcdefghijklmnopqrstuvwxyz";
+				var fullAlphabet = alphabet + alphabet + alphabet;
+				
+				function runCipher(){
+				  var cipherText = document.getElementById('cypher').value;
+				  var cipherOffset = document.getElementById('offset').value;
+				  cipherOffset = (cipherOffset % alphabet.length);
+				  var cipherFinish = '';
+				
+				  for(i=0; i<cipherText.length; i++){
+				     var letter = cipherText[i];
+				     var upper = (letter == letter.toUpperCase());
+				     letter = letter.toLowerCase();
+				    
+				     var index = alphabet.indexOf(letter);
+				     if(index == -1){
+				       cipherFinish += letter;
+				     } else {
+				       index = ((index + cipherOffset) + alphabet.length);
+				       var nextLetter = fullAlphabet[index];
+				       if(upper) nextLetter = nextLetter.toUpperCase();
+				       cipherFinish += nextLetter;
+				     }
+				  }
+				    
+				  document.getElementById('finish').value = cipherFinish;
+				}
+				
+
+				  document.onkeydown = function(evt) {
+				    setTimeout(runCipher,20);
+				  };
+				
+				// Задание 3
+				
+				
+
+				var t1 = randomInteger(0, 100000),
+					t2 = randomInteger(0, 100000);
+					console.log(t1,t2);
+					
+					var sum = t1 + t2;
+				    var h = Math.floor(sum / 3600);
+				    var m = Math.floor(sum % 3600 / 60);
+				    var s = Math.floor(sum % 3600 % 60);
+				
+				    var hDisplay = h > 0 ? h + ("ч. ") : "";
+				    var mDisplay = m > 0 ? m + ("мин. ") : "";
+				    var sDisplay = s > 0 ? s + ("сек. ") : "";
+				   
+					var result = document.getElementById("quest_3");
+					result.innerHTML = hDisplay + mDisplay + sDisplay;
+			</script>
+			
+			<style>
+				h2 {margin-top: 0;}
+			
+				.container {
+					max-width: 600px;
+					margin: 60px auto;
+					font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+				}
+				
+				.container div {
+					margin-bottom: 50px;
+					box-sizing: border-box;
+				    background: whitesmoke;
+				    padding: 20px;
+				    border-radius: 6px;
+				}
+				
+				.container label {
+					display: block;
+					margin-top: 20px;
+					font-weight: bold;
+					margin-bottom: 5px;
+					cursor: pointer;
+				}
+			</style>
+		</main>
+	</body>
+</html>
